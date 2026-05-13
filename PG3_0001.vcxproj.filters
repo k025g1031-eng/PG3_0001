@@ -20,6 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include=".editorconfig.txt" />
+    <Text Include=".editorconfig" />
   </ItemGroup>
 </Project>
