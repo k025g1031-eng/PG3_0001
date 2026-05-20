@@ -27,8 +27,8 @@ int main() {
     printf("int : %d\n", Min<int>(10, 20));
     printf("float : %.1f\n", Min<float>(1.2f, 2.4f));
     printf("double : %.2lf\n", Min<double>(1.23, 1.25));
-    printf("char");
-    Min("A", "B");
+    printf("char : ");
+    Min('A', 'B');
 
     return 0;
 }
