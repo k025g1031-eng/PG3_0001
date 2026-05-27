@@ -1,61 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <functional>
 #include <Windows.h>
 
-typedef void (*PFunc)(int*);
+void SetTimeout(std::function<void()> func, int second) {
 
-void DispResult(int* result) {
+	Sleep(second * 1000);
 
-    if (*result == 1) {
-        printf("正解です！\n");
-    }
-    else {
-        printf("不正解です！\n");
-    }
-}
-
-void setTimeout(PFunc p, int second, int* result) {
-
-    printf("---------------\n");
-
-    Sleep(second * 1000);
-
-    p(result);
+	func();
 }
 
 int main() {
 
-    srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 
-    int userChoice;
+	int input = 0;
 
-    printf("丁半ゲーム\n");
-    printf("奇数なら 1 を入力\n");
-    printf("偶数なら 0 を入力\n");
+	printf("半なら1 丁なら0 を入力してください\n");
 
-    scanf_s("%d", &userChoice);
+	scanf_s("%d", &input);
 
+	int dice = rand() % 6 + 1;
 
-    int dice = rand() % 6 + 1;
+	SetTimeout([input, dice]() {
 
-    printf("サイコロを振ります\n");
+		printf("出目は %d\n", dice);
 
-    int result = 0;
+		if (dice % 2 == input) {
+			printf("当たり\n");
+		}
+		else {
+			printf("外れ\n");
+		}
 
-    if ((userChoice == 0 && dice % 2 == 0) ||
-        (userChoice == 1 && dice % 2 == 1)) {
+		}, 3);
 
-        result = 1;
-    }
-
-    PFunc p;
-
-    p = DispResult;
-
-    setTimeout(p, 3, &result);
-
-    printf("出目は %d\n", dice);
-
-    return 0;
+	return 0;
 }
