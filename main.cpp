@@ -1,34 +1,61 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <Windows.h>
 
+typedef void (*PFunc)(int*);
 
-template <typename Type>
-Type Min(Type a, Type b) {
+void DispResult(int* result) {
 
-    if (a < b) {
-        return static_cast<Type>(a);
+    if (*result == 1) {
+        printf("正解です！\n");
     }
-
-    return static_cast<Type>(b);
+    else {
+        printf("不正解です！\n");
+    }
 }
 
+void setTimeout(PFunc p, int second, int* result) {
 
-template <>
-char Min<char>(char a, char b) {
+    printf("---------------\n");
 
-    printf("数字以外は代入できません\n");
+    Sleep(second * 1000);
 
-    return 0;
+    p(result);
 }
 
 int main() {
 
+    srand((unsigned int)time(NULL));
+
+    int userChoice;
+
+    printf("丁半ゲーム\n");
+    printf("奇数なら 1 を入力\n");
+    printf("偶数なら 0 を入力\n");
+
+    scanf_s("%d", &userChoice);
 
 
-    printf("int : %d\n", Min<int>(10, 20));
-    printf("float : %.1f\n", Min<float>(1.2f, 2.4f));
-    printf("double : %.2lf\n", Min<double>(1.23, 1.25));
-    printf("char : ");
-    Min('A', 'B');
+    int dice = rand() % 6 + 1;
+
+    printf("サイコロを振ります\n");
+
+    int result = 0;
+
+    if ((userChoice == 0 && dice % 2 == 0) ||
+        (userChoice == 1 && dice % 2 == 1)) {
+
+        result = 1;
+    }
+
+    PFunc p;
+
+    p = DispResult;
+
+    setTimeout(p, 3, &result);
+
+    printf("出目は %d\n", dice);
 
     return 0;
 }
