@@ -13,13 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{0ef4d3e1-ee3e-43c9-8914-7317d329a107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vector2">
+      <UniqueIdentifier>{d6499864-ab16-4c63-94b0-740501ef1a21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2.cpp">
+      <Filter>vector2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="enemy.h">
+      <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2.h">
+      <Filter>vector2</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
