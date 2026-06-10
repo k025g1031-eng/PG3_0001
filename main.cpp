@@ -1,42 +1,73 @@
 #include <stdio.h>
 
-class Employee
+
+class IShape
 {
 public:
-    virtual void Work()
+    virtual void Size() = 0;
+    virtual void Draw() = 0;
+};
+
+class Circle : public IShape
+{
+private:
+    float radius;
+    float area;
+
+public:
+    Circle(float r)
     {
-        printf("Work\n");
+        radius = r;
+        area = 0.0f;
+    }
+
+    void Size() override
+    {
+        area = 3.14f * radius * radius;
+    }
+
+    void Draw() override
+    {
+        printf("Circle Area = %f\n", area);
     }
 };
 
-class Programmer : public Employee
+class Rectangle : public IShape
 {
-public:
-    void Work() override
-    {
-        printf("Programming\n");
-    }
-};
+private:
+    float width;
+    float height;
+    float area;
 
-class Designer : public Employee
-{
 public:
-    void Work() override
+    Rectangle(float w, float h)
     {
-        printf("Designing\n");
+        width = w;
+        height = h;
+        area = 0.0f;
+    }
+
+    void Size() override
+    {
+        area = width * height;
+    }
+
+    void Draw() override
+    {
+        printf("Rectangle Area = %f\n", area);
     }
 };
 
 int main()
 {
-    Employee* e1 = new Programmer();
-    Employee* e2 = new Designer();
+    Circle circle(5.0f);
+    Rectangle rect(4.0f, 3.0f);
 
-    e1->Work();
-    e2->Work();
+    circle.Size();
+    circle.Draw();
 
-    delete e1;
-    delete e2;
+    rect.Size();
+    rect.Draw();
 
     return 0;
 }
