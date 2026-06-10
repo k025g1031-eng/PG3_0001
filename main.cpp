@@ -1,44 +1,42 @@
 #include <stdio.h>
 
-template <typename T1, typename T2>
-class MinClass {
+class Employee
+{
 public:
-
-    T1 value1;
-    T2 value2;
-
-    MinClass(T1 value1, T2 value2)
-        : value1(value1), value2(value2) {
-    }
-
-    T1 Min() {
-        if (value1 < value2) {
-            return value1;
-        }
-
-        return (T1)value2;
+    virtual void Work()
+    {
+        printf("Work\n");
     }
 };
 
-int main() {
+class Programmer : public Employee
+{
+public:
+    void Work() override
+    {
+        printf("Programming\n");
+    }
+};
 
-    MinClass<int, int> m1(10, 20);
-    MinClass<int, float> m2(10, 20.5f);
-    MinClass<int, double> m3(10, 20.8);
+class Designer : public Employee
+{
+public:
+    void Work() override
+    {
+        printf("Designing\n");
+    }
+};
 
-    MinClass<float, float> m4(3.5f, 2.1f);
-    MinClass<float, double> m5(3.5f, 2.8);
+int main()
+{
+    Employee* e1 = new Programmer();
+    Employee* e2 = new Designer();
 
-    MinClass<double, double> m6(5.6, 8.9);
+    e1->Work();
+    e2->Work();
 
-    printf("%d\n", m1.Min());
-    printf("%d\n", m2.Min());
-    printf("%d\n", m3.Min());
-
-    printf("%f\n", m4.Min());
-    printf("%f\n", m5.Min());
-
-    printf("%lf\n", m6.Min());
+    delete e1;
+    delete e2;
 
     return 0;
 }
