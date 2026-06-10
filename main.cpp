@@ -1,72 +1,44 @@
 #include <stdio.h>
 
-class Enemy {
+template <typename T1, typename T2>
+class MinClass {
 public:
 
-    // メンバ関数ポインタ
-    typedef void (Enemy::* State)();
+    T1 value1;
+    T2 value2;
 
-    Enemy() {
-
-        state_ = &Enemy::Approach;
+    MinClass(T1 value1, T2 value2)
+        : value1(value1), value2(value2) {
     }
 
-    void Initialize() {
+    T1 Min() {
+        if (value1 < value2) {
+            return value1;
+        }
 
-        state_ = &Enemy::Approach;
-    }
-
-    void Update() {
-
-        (this->*state_)();
-    }
-
-    void Draw() {
-
-    }
-
-private:
-
-    // 現在の状態
-    State state_;
-
-    // 接近
-    void Approach() {
-
-        printf("敵が接近しています\n");
-
-        state_ = &Enemy::Shot;
-    }
-
-    // 射撃
-    void Shot() {
-
-        printf("敵が射撃しました\n");
-
-        state_ = &Enemy::Leave;
-    }
-
-    // 離脱
-    void Leave() {
-
-        printf("敵が離脱しています\n");
-
-        state_ = &Enemy::Approach;
+        return (T1)value2;
     }
 };
 
 int main() {
 
-    Enemy enemy;
+    MinClass<int, int> m1(10, 20);
+    MinClass<int, float> m2(10, 20.5f);
+    MinClass<int, double> m3(10, 20.8);
 
-    enemy.Initialize();
+    MinClass<float, float> m4(3.5f, 2.1f);
+    MinClass<float, double> m5(3.5f, 2.8);
 
-    for (int i = 0; i < 6; i++) {
+    MinClass<double, double> m6(5.6, 8.9);
 
-        enemy.Update();
+    printf("%d\n", m1.Min());
+    printf("%d\n", m2.Min());
+    printf("%d\n", m3.Min());
 
-        enemy.Draw();
-    }
+    printf("%f\n", m4.Min());
+    printf("%f\n", m5.Min());
+
+    printf("%lf\n", m6.Min());
 
     return 0;
 }
