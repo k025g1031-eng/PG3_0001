@@ -1,33 +1,34 @@
-#include <condition_variable>
+#include <chrono>
 #include <iostream>
-#include <mutex>
-#include <thread>
-
-std::mutex mutex;
-std::condition_variable condition;
-int nextThread = 1;
-
-void PrintThread(int number) {
-    std::unique_lock<std::mutex> lock(mutex);
-
-    
-    condition.wait(lock, [number] { return nextThread == number; });
-
-    std::cout << "thread " << number << '\n';
-
-    ++nextThread;
-    lock.unlock();
-    condition.notify_all();
-}
+#include <string>
+#include <utility>
 
 int main() {
-    std::thread thread1(PrintThread, 1);
-    std::thread thread2(PrintThread, 2);
-    std::thread thread3(PrintThread, 3);
+    using Clock = std::chrono::steady_clock;
+    using Microseconds = std::chrono::microseconds;
 
-    thread1.join();
-    thread2.join();
-    thread3.join();
+  
+    std::string copySource(1000000, 'a');
+    std::string moveSource(1000000, 'a');
+
+    const auto copyStart = Clock::now();
+    std::string copiedString(copySource);
+    const auto copyEnd = Clock::now();
+
+    const auto moveStart = Clock::now();
+    std::string movedString(std::move(moveSource));
+    const auto moveEnd = Clock::now();
+
+    const auto copyTime =
+        std::chrono::duration_cast<Microseconds>(copyEnd - copyStart).count();
+    const auto moveTime =
+        std::chrono::duration_cast<Microseconds>(moveEnd - moveStart).count();
+
+    std::cout << "Copy: " << copyTime << " \xC2\xB5s\n";
+    std::cout << "Move: " << moveTime << " \xC2\xB5s\n";
+
+    std::cout << "Copied string size: " << copiedString.size() << '\n';
+    std::cout << "Moved string size: " << movedString.size() << '\n';
 
     return 0;
 }
